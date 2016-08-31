@@ -4,5 +4,4 @@ gunicorn==19.4.5
 psycopg2==2.6.1
 whitenoise==2.0.6
 numpy==1.11.1
-tensorflow==0.10.0
-
+https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.10.0rc0-cp27-none-linux_x86_64.whl
