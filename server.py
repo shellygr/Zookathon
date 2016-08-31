@@ -2,7 +2,7 @@ import SimpleHTTPServer
 import SocketServer
 from classify_image import *
 
-PORT = 80
+PORT = 8000
 
 class ClassifyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def do_POST(self):
