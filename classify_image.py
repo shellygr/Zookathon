@@ -245,6 +245,9 @@ def classify(image_url):
     sumScores = sumScores + score
     if score > 0.7:
       return animal
+  
+  if maxScore < 0.3:
+    return "I'm not sure :("
 
   return maxAnimal
 
