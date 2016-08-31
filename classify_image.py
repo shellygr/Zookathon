@@ -41,8 +41,10 @@ import sys
 import tarfile
 
 import numpy as np
-from six.moves import urllib
+import urllib
 import tensorflow as tf
+from urllib import FancyURLopener
+import urllib2
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -176,10 +178,13 @@ def run_inference_on_image(image):
     node_lookup = NodeLookup()
 
     top_k = predictions.argsort()[-FLAGS.num_top_predictions:][::-1]
+    classificationResult = dict()
     for node_id in top_k:
       human_string = node_lookup.id_to_string(node_id)
       score = predictions[node_id]
       print('%s (score = %.5f)' % (human_string, score))
+      classificationResult[human_string] = score
+    return classificationResult
 
 
 def maybe_download_and_extract():
@@ -200,12 +205,48 @@ def maybe_download_and_extract():
     print('Succesfully downloaded', filename, statinfo.st_size, 'bytes.')
   tarfile.open(filepath, 'r:gz').extractall(dest_directory)
 
+def download_image(url):
+  #opener = FancyURLopener({})
+  #opener.version = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36 SE 2.X MetaSr 1.0'
+  opener = urllib2.build_opener()
+  opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+  #urllib.URLopener.version = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36 SE 2.X MetaSr 1.0'
+  name = url.split('/')[-1]
+  print('downloading from %s image %s' %(url,name))
+  #name, _ = urllib.request.urlretrieve(url, name)
+  #name = opener.retrieve(url, name)
+  resource = opener.open(url)
+  fileHandle = open(name, "wb")
+  fileHandle.write(resource.read())
+  fileHandle.close()
+  print('downloaded %s' % (url))
+  return name
 
 def main(_):
   maybe_download_and_extract()
   image = (FLAGS.image_file if FLAGS.image_file else
            os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
   run_inference_on_image(image)
+
+def classify(image_url):
+  if image_url:
+	image_path = download_image(image_url)
+  else: image_path = os.path.join(FLAGS.model_dir, 'cropped_panda.jpg')
+  #image = (image_url if image_url else
+  #        os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
+  classificationResult = run_inference_on_image(image_path)
+  max = 0.0
+  maxAnimal = ""
+  sumScores = 0.0
+  for animal,score in classificationResult.iteritems():
+    if score > max:
+      max = score
+      maxAnimal = animal
+    sumScores = sumScores + score
+    if score > 0.7:
+      return animal
+
+  return maxAnimal
 
 
 if __name__ == '__main__':
