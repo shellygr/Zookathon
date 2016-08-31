@@ -2,7 +2,7 @@ import SimpleHTTPServer
 import SocketServer
 from classify_image import *
 
-PORT = 5000
+PORT = os.environ.get("PORT",17995)
 
 class ClassifyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def do_POST(self):
