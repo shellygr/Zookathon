@@ -4,7 +4,7 @@ import os
 
 # INIT
 app = Flask(__name__)
-PORT = int(os.environ.get("PORT",17995))
+PORT = int(os.environ.get("PORT",5000))
 
 
 
