@@ -1,1 +1,2 @@
-web: python server.py
+default_process_types:
+	web: python server.py
