@@ -1,3 +1,9 @@
+def _get_gps_index(exif_list):
+    for i in xrange(0, len(exif_list)):
+        if u'tag' in exif_list[i] and exif_list[i][u'tag'] == u'GPSLatitude':
+            return i - 1
+    return None
+
 def _flickr_to_degrees(f_coor):
     coor = f_coor
     coor = coor.replace(" deg", " ")
@@ -12,10 +18,13 @@ def _flickr_to_degrees(f_coor):
 
 def get_gps_data_from_exif(output):
     exif = output["photo"]["exif"]
-    lat = _flickr_to_degrees(str(exif[31][u'raw'][u'_content']))
-    if exif[30][u'raw'][u'_content'] == u'South':
+    gps_index = _get_gps_index(exif)
+    if not gps_index:
+        return None
+    lat = _flickr_to_degrees(str(exif[gps_index + 1][u'raw'][u'_content']))
+    if exif[gps_index][u'raw'][u'_content'] == u'South':
         lat = -lat
-    lon = _flickr_to_degrees(str(exif[33][u'raw'][u'_content']))
-    if exif[32][u'raw'][u'_content'] == u'South':
+    lon = _flickr_to_degrees(str(exif[gps_index + 3][u'raw'][u'_content']))
+    if exif[gps_index + 2][u'raw'][u'_content'] == u'South':
         lon = -lon
     return lat, lon
