@@ -64,7 +64,7 @@ function fileSelected() {
 
             // we are going to display some custom image information here
             sResultFileSize = bytesToSize(oFile.size);
-            document.getElementById('fileinfo').style.display = 'block';
+            //document.getElementById('fileinfo').style.display = 'block';
             document.getElementById('filename').innerHTML = 'Name: ' + oFile.name;
             document.getElementById('filesize').innerHTML = 'Size: ' + sResultFileSize;
             document.getElementById('filetype').innerHTML = 'Type: ' + oFile.type;
@@ -144,7 +144,7 @@ function uploadProgress(e) { // upload process in progress
         if (iPercentComplete == 100) {
             var oUploadResponse = document.getElementById('upload_response');
             oUploadResponse.innerHTML = '<h1>Please wait...processing</h1>';
-            oUploadResponse.style.display = 'block';
+            //oUploadResponse.style.display = 'block';
         }
     } else {
         document.getElementById('progress').innerHTML = 'unable to compute';
@@ -154,7 +154,7 @@ function uploadProgress(e) { // upload process in progress
 function uploadFinish(e) { // upload successfully finished
     var oUploadResponse = document.getElementById('upload_response');
     oUploadResponse.innerHTML = e.target.responseText;
-    oUploadResponse.style.display = 'block';
+    //oUploadResponse.style.display = 'block';
 
     document.getElementById('progress_percent').innerHTML = '100%';
     document.getElementById('progress').style.width = '400px';
@@ -162,6 +162,7 @@ function uploadFinish(e) { // upload successfully finished
     document.getElementById('remaining').innerHTML = '| 00:00:00';
 
     clearInterval(oTimer);
+	window.location = "/";
 }
 
 function uploadError(e) { // upload error

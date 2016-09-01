@@ -70,7 +70,9 @@ def uploadFileHandler():
 	tmp = selectByLable("")
 	print tmp
 	print json.dumps(tmp)
-	return json.dumps(tmp)
+	# redirect to homepage
+	return redirect("/", 302)
+	#return json.dumps(tmp)
 
 
 # REQUEST BODY == image url

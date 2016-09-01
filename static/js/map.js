@@ -7,16 +7,15 @@ function getFromDb(map) {
 
 		var items = data.map(function (item) {
 		    	      var contentString = '<div id="content">'+
-                        '<h1>'+item['lables']+'</h1>'+
+                        '<h3>'+item['lables']+'</h3>'+
                         '<div id="bodyContent">'+
-                        '<p>The domestic cat (Latin: Felis catus) or the feral cat (Latin: Felis silvestris catus) ' +
-                        'is a small, typically furry, carnivorous mammal. </p>'+
+			'<i>Photo taken on: '+item['dateTaken'] + "</i>" +
                         '<img src="uploads/'+item['photopath']+'" ' +
-                        'style="width:200px"/>' +
+                        'style="width:150px;float:right;margin:5px"/>' +
                         '</div>' +
                         '</div>';
 
-            var iconImage = "../img/icon.png"
+            var iconImage = "../img/blueIcon.png"
 			curMarker = new google.maps.Marker({
 				map: map,
 				position: {lat: item['latitude'], lng: item['longitude']},
