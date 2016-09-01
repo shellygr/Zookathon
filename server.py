@@ -51,7 +51,7 @@ def classificationHandler():
 # THIS IS OUR HOMEPAGE!
 @app.route("/")
 def hello():
-	return "Moved to flask!"
+	return render_template('maptest.html')
 
 
 # RUNNING THE APP
