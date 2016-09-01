@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>Zookathon!</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
 	<link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
@@ -16,9 +16,12 @@
 <!-- Upload section -->
 <br/><br/><br/>
  <div class="upload_form_cont">
+	<table>
+		<tr>
+		<td width='250px'>
                 <form id="upload_form" enctype="multipart/form-data" method="post" action="upload">
-                    <div>
-                        <div>
+                    <div display="float:left;">
+                        <div display="float:left;">
 				<input type="file" name="image_file" id="image_file" onchange="fileSelected();" />
                         	<input type="button" value="Upload" onclick="startUploading()" />
 			</div>
@@ -29,12 +32,8 @@
                         <div id="filetype"></div>
                         <div id="filedim"></div>
                     </div>
-                    <div id="error">You should select valid image files only!</div>
-                    <div id="error2">An error occurred while uploading the file</div>
-                    <div id="abort">The upload has been canceled by the user or the browser dropped the connection</div>
-                    <div id="warnsize">Your file is very big. We can't accept it. Please select smaller file</div>
 
-                    <div id="progress_info">
+<!--                <div id="progress_info" style="float:right;">
                         <div id="progress"></div>
                         <div id="progress_percent">&nbsp;</div>
                         <div class="clear_both"></div>
@@ -45,20 +44,35 @@
                             <div class="clear_both"></div>
                         </div>
                         <div id="upload_response" style="display:none;"></div>
-                    </div>
+                    </div>-->
+	           <div id="error">You should select valid image files only!</div>
+                    <div id="error2">An error occurred while uploading the file</div>
+                    <div id="abort">The upload has been canceled by the user or the browser dropped the connection</div>
+                    <div id="warnsize">Your file is very big. We can't accept it. Please select smaller file</div>
+
+
                 </form>
-
-                <img id="preview" />
+		</td>
+		<td width='250px'>
+			<div id="progress_info" style="float:left;">
+                        	<div id="progress"></div>
+	                        <div id="progress_percent">&nbsp;</div>
+        	                <div class="clear_both"></div>
+                	        <div>
+                        	    <div id="speed">&nbsp;</div>
+	                            <div id="remaining">&nbsp;</div>
+	                            <div id="b_transfered">&nbsp;</div>
+        	                    <div class="clear_both"></div>
+                	        </div>
+                        	<div id="upload_response" style="display:none;"></div>
+                    	</div>
+			</td>
+			<td width='150px'>
+        		        <img id="preview" />
+			</td>
+			</tr>
+		    </table>
             </div>
-
-
-
-<!-- Filter section -->
-
-	<div class="filter">
-		filter section
-	</div>
-
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByfkadWJcyG0RBe-vQNrRxSXbMKnIq0Js&libraries=places&callback=initMap"

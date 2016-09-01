@@ -132,9 +132,9 @@ input[type=button] {
 #progress {
     border:1px solid #ccc;
     display:none;
-    float:left;
+    float:right;
     height:14px;
-
+	width: 100px;
     border-radius:10px;
     -moz-border-radius:10px;
     -ms-border-radius:10px;
