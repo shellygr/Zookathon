@@ -57,7 +57,10 @@ def uploadFileHandler():
 	else:
 		lat, lng = uniform(40,60), uniform(0,40)
 		print "random lat %f %f" % (lat, lng)
-	insertLine(secureFilename, lat,lng,labels, "1 Sep 2016, 16:33")
+	date = read_date(fullPathToUploadedFile)
+	if date == None:
+		date = '1 Sep 2016, 16:33'
+	insertLine(secureFilename, lat,lng,labels, date)
 	print "saved %s" % (secureFilename)
 	if PORT==5000:
 		print "WORKING LOCALLY"
