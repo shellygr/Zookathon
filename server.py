@@ -27,6 +27,10 @@ def uploadFileHandler():
 	print "got %s" % (secureFilename)
 	f.save(secureFilename)
 	print "saved %s" % (secureFilename)
+	if PORT==5000:
+		print "WORKING LOCALLY"
+	else:
+		print "WORKING ON HEROKU"
 	return "Uploaded %s, <img src=%s/>" % (secureFilename, secureFilename)
 
 
