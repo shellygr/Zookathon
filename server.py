@@ -16,6 +16,11 @@ def getMethodHandler():
 	print(rows)
 	return json.dumps(rows)
 
+# Get file for icons
+@app.route('/img/<filename>')
+def get_icon_file(filename):
+	return send_from_directory('img', filename)
+
 # Get the uploaded file
 # filename is in path
 @app.route('/uploads/<filename>')
