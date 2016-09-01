@@ -35,10 +35,10 @@ function getFromDb(map) {
 		    	      var contentString = '<div id="content">'+
                         '<h3>'+item['lables']+'</h3>'+
                         '<div id="bodyContent">'+
-			'<i>Photo taken on: '+item['dateTaken'] + "</i><br/>" +
-			(item['endangeredStatus'] >= 0 ? ('<i>Conservation status: '+getConservationStatus(item['endangeredStatus']) + "</i><br/>") : "")  +
+			'<p style="display:inline-block;"><i>Photo taken on: '+item['dateTaken'] + "</i><br/>" +
+			(item['endangeredStatus'] >= 0 ? ('<i>Conservation status: '+getConservationStatus(item['endangeredStatus']) + "</i>") : "")  +
                         '<img src="uploads/'+item['photopath']+'" ' +
-                        'style="width:150px;float:right;margin:5px"/>' +
+                        'style="width:150px;float:right;display:inline-block;vertical-align:top;margin:5px"/></p>' +
                         '</div>' +
                         '</div>';
 
