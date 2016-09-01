@@ -5,7 +5,7 @@ def initDB():
         conn = sqlite3.connect('photos.db')
         c = conn.cursor()
         c.execute('''CREATE TABLE photo
-            (photopath text,latitude text, longitude text, lables text)''')
+            (photopath text,latitude number, longitude number, lables text)''')
         conn.commit()
         conn.close()
     except Exception as e:
@@ -28,11 +28,13 @@ def selectByLable(lable):
         conn = sqlite3.connect('photos.db')
         c = conn.cursor()
         c.execute("SELECT * FROM photo WHERE lables like ?", ["%"+lable+"%"])
-        rows = c.fetchall()
+        #rows = c.fetchall()
+	r = [dict((c.description[i][0], value) \
+               for i, value in enumerate(row)) for row in c.fetchall()]
 	#print c.fetchone()
         conn.commit()
         conn.close()
-	return rows
+	return r
     except Exception as e:
         print e.message
 

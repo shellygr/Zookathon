@@ -13,6 +13,7 @@ app.config['UPLOAD_FOLDER'] = 'uploads/'
 @app.route('/getMethod')
 def getMethodHandler():
 	rows = selectByLable("")
+	print(rows)
 	return json.dumps(rows)
 
 # Get the uploaded file

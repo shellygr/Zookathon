@@ -1,4 +1,18 @@
 var map;
+function getFromDb(map) {
+
+	$.getJSON('getMethod', function(data) {
+		var items = data.map(function (item) { 
+			return new google.maps.Marker({
+				map: map,
+				position: {lat: item['latitude'], lng: item['longitude']},
+				title: item['lables']
+			}); /* item['photopath'] is the filename */
+		});
+	});
+
+}
+
 function initMap() {
   var myLatLng = {lat: 31.7, lng: 35.5};
 
@@ -6,6 +20,8 @@ function initMap() {
     center: myLatLng,
     zoom: 7
   });
+
+  getFromDb(map);
 
   var contentString = '<div id="content">'+
     '<h1>Cat</h1>'+
