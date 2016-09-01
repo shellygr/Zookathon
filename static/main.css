@@ -177,3 +177,6 @@ input[type=button] {
     background: linear-gradient(#bbb, #eee);
 }
 
+h3 {
+    text-transform: uppercase;
+}
