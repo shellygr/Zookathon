@@ -1,0 +1,18 @@
+<script>
+serverUrl = "http://1.1.0.8.4:5000/getMethod"
+
+function sendMapQuery(filters) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      UpdateMap(xhttp.responseText);
+    }
+    else if(xhttp.readyState == 4 && xhttp.status != 200)
+    {
+		//TODO: change to html error message?
+		alert(xhttp.responseText)
+    }
+  };
+  xhttp.open("POST", serverUrl, true);
+  xhttp.send(filters);
+</script>
