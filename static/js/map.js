@@ -1,4 +1,5 @@
 var map;
+var markers = [];
 function getFromDb(map) {
 
 	$.getJSON('getMethod', function(data) {
@@ -15,6 +16,7 @@ function getFromDb(map) {
                         '</div>' +
                         '</div>';
 
+
             var iconImage = "../img/blueIcon.png"
 			curMarker = new google.maps.Marker({
 				map: map,
@@ -22,17 +24,35 @@ function getFromDb(map) {
 				title: item['lables'],
 				icon:iconImage
 			}); /* item['photopath'] is the filename */
+			curMarker.markedLables = item['lables'];
             var infowindow = new google.maps.InfoWindow({
                 content: contentString
             });
-	  infowindow.yourMarker = curMarker
+	  infowindow.yourMarker = curMarker;
 	  curMarker.addListener('click', function() {
                 infowindow.open(map, infowindow.yourMarker);
                 });
+            markers.push(curMarker);
             return curMarker;
 		});
 	});
 
+}
+
+function filterTextDownKey()
+{
+    filterMarkers(document.getElementById('filterMarkers').value);
+}
+
+function filterMarkers(lable)
+{
+        for(var i=0;i<markers.length;i++)
+        {
+            if(markers[i].markedLables.includes(lable))
+                markers[i].setMap(map);
+            else
+                markers[i].setMap(null);
+        }
 }
 
 function initMap() {
