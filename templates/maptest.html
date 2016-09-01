@@ -4,22 +4,11 @@
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 80%;
-        width: 100%;
-      }
-    </style>
 	<link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
-    	<script src="{{ url_for('static', filename='script.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </head>
   <body>
+    <input id="search-input" type="text" placeholder="Search Box">
     <div id="map"></div>
 
 <!-- Upload section -->
