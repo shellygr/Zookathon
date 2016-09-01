@@ -8,7 +8,7 @@ def getEndangeredStatus(titles):
         title = title.lower()
         response = urllib2.urlopen('https://en.wikipedia.org/w/api.php?format=json&action=query&prop=categories&clshow=!hidden&titles={0}'.format(title))
         html = response.read()
-        print html
+        html = html.replace('_',' ')
         if html.find('IUCN Red List least concern species') != -1:
             return 0
         if html.find('IUCN Red List near threatened species') != -1:
