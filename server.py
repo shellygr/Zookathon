@@ -4,6 +4,7 @@ import os
 from dbconnection import *
 import json
 from gpscoordinates import *
+from random import randint,uniform
 
 # INIT
 app = Flask(__name__)
@@ -54,8 +55,9 @@ def uploadFileHandler():
 	if tmp != None:
 		lat, lng = tmp
 	else:
-		lat, lng = 0, 0
-	insertLine(secureFilename, lat,lng,labels)
+		lat, lng = uniform(40,60), uniform(0,40)
+		print "random lat %f %f" % (lat, lng)
+	insertLine(secureFilename, lat,lng,labels, "1 Sep 2016, 16:33")
 	print "saved %s" % (secureFilename)
 	if PORT==5000:
 		print "WORKING LOCALLY"

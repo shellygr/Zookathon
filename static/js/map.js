@@ -60,8 +60,8 @@ function initMap() {
     content: contentString
   });
 
-  var image = "../img/icon.png"
-
+  var image = "../img/greenIcon.png"
+/*
   var marker = new google.maps.Marker({
     map: map,
     position: myLatLng,
@@ -72,11 +72,11 @@ function initMap() {
   marker.addListener('click', function() {
     infowindow.open(map, marker);
   });
-
-  var marker2 = new google.maps.Marker({
+*/
+ /* var marker2 = new google.maps.Marker({
     map: map,
     position: {lat: 33.081084, lng: 35.794388},
     title: 'dog'
-  });
+  });*/
 }
 
