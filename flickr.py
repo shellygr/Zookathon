@@ -78,8 +78,11 @@ def getPhotos():
             continue
         flickrapi.shorturl.url(row['id'])
         urllib.urlretrieve(row['url_z'], r"flickr/flickrAuto{0}.jpg".format(i))
-        relativePath = "testAuto{0}.jpg".format(i)
-        lables = classify(relativePath)
+        relativePath = "flickrAuto{0}.jpg".format(i)
+        lables = classify('flickr/'+relativePath)
         date = '%d Aug 2016, %d:%d' % (randint(1, 29) + 1, randint(1, 12) + 8, randint(1, 50) + 1)
         insertLine(relativePath,lat,lon,lables,date,getEndangeredStatus(lables))
         i+=1
+
+
+getPhotos()
