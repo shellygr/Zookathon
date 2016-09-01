@@ -25,7 +25,7 @@ def get_gps_data_from_exif(output):
     if exif[gps_index][u'raw'][u'_content'] == u'South':
         lat = -lat
     lon = _flickr_to_degrees(str(exif[gps_index + 3][u'raw'][u'_content']))
-    if exif[gps_index + 2][u'raw'][u'_content'] == u'South':
+    if exif[gps_index + 2][u'raw'][u'_content'] == u'West':
         lon = -lon
     return lat, lon
 
