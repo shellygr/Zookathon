@@ -1,7 +1,9 @@
 import urllib2
 
 def getEndangeredStatus(titles):
+    titles = titles.split(',')
     for title in titles[:5]:
+        title = title.strip()
         title = title.replace(' ','_')
         title = title.lower()
         response = urllib2.urlopen('https://en.wikipedia.org/w/api.php?format=json&action=query&prop=categories&clshow=!hidden&titles={0}'.format(title))
