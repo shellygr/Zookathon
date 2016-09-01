@@ -1,0 +1,31 @@
+/* make the API call */
+FB.api(
+    "...?fields={fieldname_of_type_Location}",
+    function (response) {
+      if (response && !response.error) {
+        /* handle the result */
+      }
+    }
+);
+
+/* make the API call */
+FB.api(
+    "/{place-id}",
+    function (response) {
+      if (response && !response.error) {
+        /* handle the result */
+      }
+    }
+);
+
+/* make the API call */
+FB.api(
+    "/{photo-id}",
+    function (response) {
+      if (response && !response.error) {
+        /* handle the result */
+      }
+    }
+);
+
+
