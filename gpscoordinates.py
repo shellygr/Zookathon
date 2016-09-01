@@ -186,17 +186,16 @@ def read_date(filename):
         else:
             return None
     split_date = exif_date.replace(":", " ").split()
-    print split_date
     return split_date[2] + " " + calendar.month_abbr[int(split_date[1])] + " " + split_date[0] + ", " + split_date[3] \
         + ":" + split_date[4]
 
 
 # TEST:
-test_im = Image.open("original_thumb.jpg")
-test_exif_dict = piexif.load(test_im.info["exif"])
-print test_exif_dict
-print test_exif_dict["GPS"]
-print read_date("original_thumb.jpg")
+# test_im = Image.open("original_thumb.jpg")
+# test_exif_dict = piexif.load(test_im.info["exif"])
+# print test_exif_dict
+# print test_exif_dict["GPS"]
+# print read_date("original_thumb.jpg")
 # test_coordinates = read_gps_data("original_thumb.jpg")
 # write_gps_data("thumb.jpg", -test_coordinates[0], -test_coordinates[1])
 # print test_coordinates
