@@ -37,10 +37,13 @@ function initMap() {
     content: contentString
   });
 
+  var image = "../img/icon.png"
+
   var marker = new google.maps.Marker({
     map: map,
     position: myLatLng,
     title: 'cat'
+    icon: image
   });
 
   marker.addListener('click', function() {
