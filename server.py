@@ -49,7 +49,12 @@ def uploadFileHandler():
 	fullPathToUploadedFile = os.path.join(app.config['UPLOAD_FOLDER'], secureFilename)
 	f.save(fullPathToUploadedFile)
 	labels = classify(fullPathToUploadedFile)
-	lat, lng = read_gps_data(fullPathToUploadedFile)
+	
+	tmp = read_gps_data(fullPathToUploadedFile)
+	if tmp != None:
+		lat, lng = tmp
+	else:
+		lat, lng = 0, 0
 	insertLine(secureFilename, lat,lng,labels)
 	print "saved %s" % (secureFilename)
 	if PORT==5000:

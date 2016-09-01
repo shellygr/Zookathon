@@ -11,25 +11,26 @@ function getFromDb(map) {
                         '<div id="bodyContent">'+
                         '<p>The domestic cat (Latin: Felis catus) or the feral cat (Latin: Felis silvestris catus) ' +
                         'is a small, typically furry, carnivorous mammal. </p>'+
-                        '<img src="'+item['photopath']+'" ' +
+                        '<img src="uploads/'+item['photopath']+'" ' +
                         'style="width:200px"/>' +
                         '</div>' +
                         '</div>';
 
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
             var iconImage = "../img/icon.png"
-			marker = new google.maps.Marker({
+			curMarker = new google.maps.Marker({
 				map: map,
 				position: {lat: item['latitude'], lng: item['longitude']},
 				title: item['lables'],
 				icon:iconImage
 			}); /* item['photopath'] is the filename */
-			  marker.addListener('click', function() {
-                infowindow.open(map, marker);
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+	  infowindow.yourMarker = curMarker
+	  curMarker.addListener('click', function() {
+                infowindow.open(map, infowindow.yourMarker);
                 });
-            return marker;
+            return curMarker;
 		});
 	});
 
@@ -40,7 +41,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: myLatLng,
-    zoom: 7
+    zoom: 3
   });
 
   getFromDb(map);
