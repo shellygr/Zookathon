@@ -1,5 +1,30 @@
 var map;
 var markers = [];
+
+function getConservationStatus(endangerStatus) {
+	if (endangerStatus == 0)
+		return "Least concern";
+
+	if (endangerStatus == 1)
+		return "Near threatened";
+
+	if (endangerStatus == 2)
+		return "Vulnerable";
+
+	if (endangerStatus == 3)
+		return "Endangered";
+	
+        if (endangerStatus == 4)
+                return "Critically endangered";
+
+        if (endangerStatus == 5)
+                return "Extinct in the wild";
+
+        if (endangerStatus == 6)
+                return "Extinct";
+
+}
+
 function getFromDb(map) {
 
 	$.getJSON('getMethod', function(data) {
@@ -10,7 +35,8 @@ function getFromDb(map) {
 		    	      var contentString = '<div id="content">'+
                         '<h3>'+item['lables']+'</h3>'+
                         '<div id="bodyContent">'+
-			'<i>Photo taken on: '+item['dateTaken'] + "</i>" +
+			'<i>Photo taken on: '+item['dateTaken'] + "</i><br/>" +
+			(item['endangeredStatus'] >= 0 ? ('<i>Conservation status: '+getConservationStatus(item['endangeredStatus']) + "</i><br/>") : "")  +
                         '<img src="uploads/'+item['photopath']+'" ' +
                         'style="width:150px;float:right;margin:5px"/>' +
                         '</div>' +

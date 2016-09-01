@@ -15,7 +15,7 @@ def insertLine(path,lat,long,lables,dateTaken,endangeredStatus):
     try:
         conn = sqlite3.connect('photos.db')
         c = conn.cursor()
-        args = [path,str(lat),str(long),lables,dateTaken]
+        args = [path,str(lat),str(long),lables,dateTaken,endangeredStatus]
         c.execute("INSERT INTO photo VALUES (?,?,?,?,?,?)",args)
         conn.commit()
         conn.close()
