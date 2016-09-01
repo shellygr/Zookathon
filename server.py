@@ -3,6 +3,7 @@ from flask import *
 import os
 from dbconnection import *
 import json
+from gpscoordinates import *
 
 # INIT
 app = Flask(__name__)
@@ -48,7 +49,8 @@ def uploadFileHandler():
 	fullPathToUploadedFile = os.path.join(app.config['UPLOAD_FOLDER'], secureFilename)
 	f.save(fullPathToUploadedFile)
 	labels = classify(fullPathToUploadedFile)
-	insertLine(secureFilename, 0,0,labels)
+	lat, lng = read_gps_data(fullPathToUploadedFile)
+	insertLine(secureFilename, lat,lng,labels)
 	print "saved %s" % (secureFilename)
 	if PORT==5000:
 		print "WORKING LOCALLY"
