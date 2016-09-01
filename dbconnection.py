@@ -5,18 +5,18 @@ def initDB():
         conn = sqlite3.connect('photos.db')
         c = conn.cursor()
         c.execute('''CREATE TABLE photo
-            (photopath text,latitude number, longitude number, lables text)''')
+            (photopath text,latitude number, longitude number, lables text, dateTaken text)''')
         conn.commit()
         conn.close()
     except Exception as e:
         print e.message
 
-def insertLine(path,lat,long,lables):
+def insertLine(path,lat,long,lables,dateTaken):
     try:
         conn = sqlite3.connect('photos.db')
         c = conn.cursor()
         args = [path,str(lat),str(long),lables]
-        c.execute("INSERT INTO photo VALUES (?,?,?,?)",args)
+        c.execute("INSERT INTO photo VALUES (?,?,?,?,?)",args)
         conn.commit()
         conn.close()
     except Exception as e:
