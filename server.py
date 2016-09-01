@@ -1,6 +1,7 @@
 from classify_image import *
 from flask import *
 import os
+from dbconnection import *
 
 # INIT
 app = Flask(__name__)
@@ -46,12 +47,18 @@ def classificationHandler():
 	if result:
 		return result.split(',')[0]
 	return "I don't know :("
-	
+
+@app.route("/initdb/", methods=['GET'])
+def initDbHandler():
+	print "init db"
+	initDB()
+	return 'db is init'
+
 
 # THIS IS OUR HOMEPAGE!
 @app.route("/")
 def hello():
-	return "Moved to flask!"
+	return render_template('maptest.html')
 
 
 # RUNNING THE APP
