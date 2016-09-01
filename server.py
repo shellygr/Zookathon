@@ -5,6 +5,8 @@ from dbconnection import *
 import json
 from gpscoordinates import *
 from random import randint,uniform
+from wikipediaApi import *
+
 
 # INIT
 app = Flask(__name__)
@@ -60,7 +62,12 @@ def uploadFileHandler():
 	date = read_date(fullPathToUploadedFile)
 	if date == None:
 		date = '1 Sep 2016, 16:33'
-	insertLine(secureFilename, lat,lng,labels, date)
+	try:
+		status = getEndangeredStatus(labels)
+	except Exception as e:
+		status = -1
+
+	insertLine(secureFilename, lat,lng,labels, date,status)
 	print "saved %s" % (secureFilename)
 	if PORT==5000:
 		print "WORKING LOCALLY"
