@@ -6,7 +6,13 @@ from dbconnection import *
 # INIT
 app = Flask(__name__)
 PORT = int(os.environ.get("PORT",5000))
+app.config['UPLOAD_FOLDER'] = 'uploads/'
 
+# Get the uploaded file
+# filename is in path
+@app.route('/uploads/<filename>')
+def send_file(filename):
+	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 # REQUEST BODY - none
 # Form action - upload image
@@ -26,13 +32,16 @@ def uploadFileHandler():
 	#secureFilename = secure_filename(f.filename) # Requires werkzeug.utils
 	secureFilename = f.filename # not really secure...
 	print "got %s" % (secureFilename)
-	f.save(secureFilename)
+	fullPathToUploadedFile = os.path.join(app.config['UPLOAD_FOLDER'], secureFilename)
+	f.save(fullPathToUploadedFile)
+	labels = classify(fullPathToUploadedFile)
+	insertLine(secureFilename, 0,0,labels)
 	print "saved %s" % (secureFilename)
 	if PORT==5000:
 		print "WORKING LOCALLY"
 	else:
 		print "WORKING ON HEROKU"
-	return "Uploaded %s, <img src=%s/>" % (secureFilename, secureFilename)
+	return "Uploaded %s, <img src='uploads/%s'>" % (secureFilename, secureFilename)
 
 
 # REQUEST BODY == image url

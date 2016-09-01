@@ -55,7 +55,7 @@ FLAGS = tf.app.flags.FLAGS
 # imagenet_2012_challenge_label_map_proto.pbtxt:
 #   Text representation of a protocol buffer mapping a label to synset ID.
 tf.app.flags.DEFINE_string(
-    'model_dir', '/tmp/imagenet',
+    'model_dir', 'imagenet',
     """Path to classify_image_graph_def.pb, """
     """imagenet_synset_to_human_label_map.txt, and """
     """imagenet_2012_challenge_label_map_proto.pbtxt.""")
@@ -206,21 +206,18 @@ def maybe_download_and_extract():
   tarfile.open(filepath, 'r:gz').extractall(dest_directory)
 
 def download_image(url):
-  #opener = FancyURLopener({})
-  #opener.version = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36 SE 2.X MetaSr 1.0'
-  opener = urllib2.build_opener()
-  opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
-  #urllib.URLopener.version = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36 SE 2.X MetaSr 1.0'
-  name = url.split('/')[-1]
-  print('downloading from %s image %s' %(url,name))
+  #opener = urllib2.build_opener()
+  #opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+  # changed from #name = url.split('/')[-1]
+  #print('downloading from %s image %s' %(url,name))
   #name, _ = urllib.request.urlretrieve(url, name)
   #name = opener.retrieve(url, name)
-  resource = opener.open(url)
-  fileHandle = open(name, "wb")
-  fileHandle.write(resource.read())
-  fileHandle.close()
-  print('downloaded %s' % (url))
-  return name
+  #resource = opener.open(url)
+  #fileHandle = open(name, "wb")
+  #fileHandle.write(resource.read())
+  #fileHandle.close()
+  #print('downloaded %s' % (url))
+  return url
 
 def main(_):
   maybe_download_and_extract()
@@ -246,7 +243,7 @@ def classify(image_url):
     if score > 0.7:
       return animal
   
-  if maxScore < 0.3:
+  if max < 0.3:
     return "I'm not sure :("
 
   return maxAnimal
