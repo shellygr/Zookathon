@@ -2,6 +2,7 @@ from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 import piexif
 import math
+import calendar
 
 #############  https://gist.github.com/erans/983821 MIT licence ##########
 
@@ -101,6 +102,10 @@ def _convert_to_exif_format(dec_deg):
     return (degrees,1), (minutes,1), (seconds,1)
 
 
+def _convert_month_to_verbal(numeric):
+    return numeric
+
+
 def read_gps_data(filename):
     """Receives a path to an image.
     Returns the latitude and longitude coordinates.
@@ -160,8 +165,38 @@ def write_gps_data(filename, lat, lon):
     piexif.insert(exif_bytes, filename)
 
 
+def read_date(filename):
+    """Receives a path to an image.
+    Returns a string containing the date and time the picture was taken or, if not available,
+    the date and time it was stored as digital data.
+    If both are not available in the EXIF data, the function returns None.
+    The date-time format returned is, for example: 1 Sep 2016, 21:30"""
+    im = Image.open(filename)
+    if "exif" not in im.info:
+        return None
+    exif_dict = piexif.load(im.info["exif"])
+    if "Exif" not in exif_dict:
+        return None
+    exif_data = exif_dict["Exif"]
+    if 36867 in exif_data:
+        exif_date = exif_data[36867]
+    else:
+        if 36868 in exif_data:
+            exif_date = exif_data[36868]
+        else:
+            return None
+    split_date = exif_date.replace(":", " ").split()
+    print split_date
+    return split_date[2] + " " + calendar.month_abbr[int(split_date[1])] + " " + split_date[0] + ", " + split_date[3] \
+        + ":" + split_date[4]
 
-# # TEST:
+
+# TEST:
+test_im = Image.open("original_thumb.jpg")
+test_exif_dict = piexif.load(test_im.info["exif"])
+print test_exif_dict
+print test_exif_dict["GPS"]
+print read_date("original_thumb.jpg")
 # test_coordinates = read_gps_data("original_thumb.jpg")
 # write_gps_data("thumb.jpg", -test_coordinates[0], -test_coordinates[1])
 # print test_coordinates
