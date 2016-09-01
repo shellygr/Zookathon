@@ -2,11 +2,18 @@ from classify_image import *
 from flask import *
 import os
 from dbconnection import *
+import json
 
 # INIT
 app = Flask(__name__)
 PORT = int(os.environ.get("PORT",5000))
 app.config['UPLOAD_FOLDER'] = 'uploads/'
+
+# Get everything/filtered in databse
+@app.route('/getMethod')
+def getMethodHandler():
+	rows = selectByLable("")
+	return json.dumps(rows)
 
 # Get the uploaded file
 # filename is in path
@@ -41,7 +48,11 @@ def uploadFileHandler():
 		print "WORKING LOCALLY"
 	else:
 		print "WORKING ON HEROKU"
-	return "Uploaded %s, <img src='uploads/%s'>" % (secureFilename, secureFilename)
+	#return "Uploaded %s, <img src='uploads/%s'>" % (secureFilename, secureFilename)
+	tmp = selectByLable("")
+	print tmp
+	print json.dumps(tmp)
+	return json.dumps(tmp)
 
 
 # REQUEST BODY == image url

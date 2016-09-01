@@ -28,9 +28,11 @@ def selectByLable(lable):
         conn = sqlite3.connect('photos.db')
         c = conn.cursor()
         c.execute("SELECT * FROM photo WHERE lables like ?", ["%"+lable+"%"])
-        print c.fetchone()
+        rows = c.fetchall()
+	#print c.fetchone()
         conn.commit()
         conn.close()
+	return rows
     except Exception as e:
         print e.message
 
