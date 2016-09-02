@@ -37,7 +37,7 @@ api_secret = u'0d265afcea544a3b'
 
 flickr = flickrapi.FlickrAPI(api_key, api_secret, format='parsed-json')
 #
-# photos = flickr.photos.search(privacy_filter=1, has_geo=1, per_page='3', lat=32.113332, lon=34.803250)
+# photos = flickr.photos.search(privacy_filter=1, has_geo=1, per_page='50', lat=32.113332, lon=34.803250)
 #
 # print photos
 
@@ -66,10 +66,10 @@ from wikipediaApi import *
 from random import *
 
 def getPhotos():
-    output = flickr.photos.search(privacy_filter=1, has_geo=1, per_page='5', group_id=u'49502993915@N01',extras= 'url_z')
+    output = flickr.photos.search(privacy_filter=1, has_geo=1, per_page='50', group_id=u'49502993915@N01',extras= 'url_z')
     i=0
     for row in output[u'photos'][u'photo']:
-        print row
+        #print row
         exif = flickr.photos.getExif(photo_id = row['id'])
         gpsCoord = get_gps_data_from_exif(exif)
         if gpsCoord != None:
