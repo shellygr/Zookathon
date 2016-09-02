@@ -61,7 +61,7 @@ def uploadFileHandler():
 		print "random lat %f %f" % (lat, lng)
 	date = read_date(fullPathToUploadedFile)
 	if date == None:
-		date = '1 Sep 2016, 16:33'
+		date = '%d Sep 2016, %d:%d' % (randint(1,29)+1, randint(1,12)+8, randint (1,50)+1)
 	try:
 		status = getEndangeredStatus(labels)
 	except Exception as e:

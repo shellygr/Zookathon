@@ -1,3 +1,34 @@
+def _get_gps_index(exif_list):
+    for i in xrange(0, len(exif_list)):
+        if u'tag' in exif_list[i] and exif_list[i][u'tag'] == u'GPSLatitude':
+            return i - 1
+    return None
+
+def _flickr_to_degrees(f_coor):
+    coor = f_coor
+    coor = coor.replace(" deg", " ")
+    coor = coor.replace("' ", " ")
+    coor = coor.replace("\"", " ")
+    split_coor = coor.split()
+    d = float(split_coor[0])
+    m = float(split_coor[1])
+    s = float(split_coor[2])
+    return d + (m / 60.0) + (s / 3600.0)
+
+
+def get_gps_data_from_exif(output):
+    exif = output["photo"]["exif"]
+    gps_index = _get_gps_index(exif)
+    if not gps_index:
+        return None
+    lat = _flickr_to_degrees(str(exif[gps_index + 1][u'raw'][u'_content']))
+    if exif[gps_index][u'raw'][u'_content'] == u'South':
+        lat = -lat
+    lon = _flickr_to_degrees(str(exif[gps_index + 3][u'raw'][u'_content']))
+    if exif[gps_index + 2][u'raw'][u'_content'] == u'West':
+        lon = -lon
+    return lat, lon
+
 import flickrapi
 import flickrapi.shorturl
 
@@ -6,7 +37,7 @@ api_secret = u'0d265afcea544a3b'
 
 flickr = flickrapi.FlickrAPI(api_key, api_secret, format='parsed-json')
 #
-# photos = flickr.photos.search(privacy_filter=1, has_geo=1, per_page='3', lat=32.113332, lon=34.803250)
+# photos = flickr.photos.search(privacy_filter=1, has_geo=1, per_page='50', lat=32.113332, lon=34.803250)
 #
 # print photos
 
@@ -28,5 +59,30 @@ output_dict = {u'photos': {u'total': u'75784', u'photo': [{u'isfamily': 0, u'tit
 # for i in xrange(0, len(photo_dict)):
 #     print photo_dict[i]
 #
-# print flickrapi.shorturl.url(u'28760597723')
-print flickr.photos.getExif(photo_id = u'28760597723')
+import urllib
+from dbconnection import *
+from classify_image import *
+from wikipediaApi import *
+from random import *
+
+def getPhotos():
+    output = flickr.photos.search(privacy_filter=1, has_geo=1, per_page='50', group_id=u'49502993915@N01',extras= 'url_z')
+    i=0
+    for row in output[u'photos'][u'photo']:
+        #print row
+        exif = flickr.photos.getExif(photo_id = row['id'])
+        gpsCoord = get_gps_data_from_exif(exif)
+        if gpsCoord != None:
+            lat,lon = gpsCoord
+        else:
+            continue
+        flickrapi.shorturl.url(row['id'])
+        urllib.urlretrieve(row['url_z'], r"flickr/flickrAuto{0}.jpg".format(i))
+        relativePath = "flickrAuto{0}.jpg".format(i)
+        lables = classify('flickr/'+relativePath)
+        date = '%d Aug 2016, %d:%d' % (randint(1, 29) + 1, randint(1, 12) + 8, randint(1, 50) + 1)
+        insertLine(relativePath,lat,lon,lables,date,getEndangeredStatus(lables))
+        i+=1
+
+
+getPhotos()
