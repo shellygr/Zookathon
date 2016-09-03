@@ -1,0 +1,2 @@
+from dbconnection import *
+clearTable()

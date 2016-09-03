@@ -1,0 +1,26 @@
+I'm Shelly, and these are my team mates: Orr, Nir and Keren there behind.
+
+For all animal lovers & enthusiats around the world, we present Zookathon:
+Self classifying, automatically-generated social gallery of animals.
+
+There are currently millions of wildlife pictures, taken by ordinary people, all the time.
+
+Zookathon extracts photos from flickr, and classifies the animals in the photos, even if they are untagged.
+In addition, we use GPS data to display the photos on a map according to the location where they were taken.
+
+For example, A tourist visiting China wishes to learn about the animals in the country.
+From the photos taken by previous tourists, We see pandas, but also red pandas, who are both endangered species.
+
+Speaking of endangered species, we know that Wildlife conservation activists install cameras on trees in order to survey the movement of tigers.
+Problem is, not only tigers pass by those cameras - could be birds, elephants.
+Our detection engine can help the activists to filter out the irrelevant animals.
+[Type tiger]
+
+Also, say a diver wants to find a new coral reef nearby to see with his own eyes. Now, the thousands of unlabled coral photos in flickr are availble on the map for him to use and dive right to the place. 
+
+To sum up, we show how we utilize the vast data in social networks 
+using animal classification + gps data to many many good uses
+
+Thank you!
+
+
